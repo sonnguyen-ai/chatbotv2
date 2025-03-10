@@ -1,0 +1,297 @@
+ /* Chat Container */
+ :host {
+  --fb-blue: #1877f2;
+  --fb-blue-hover: #1464d1;
+  --fb-grey: #f0f2f5;
+  --fb-text: #050505;
+  --chat-width: min(400px, 95vw);
+  --chat-height: min(600px, 80vh);
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica,
+    Arial, sans-serif;
+}
+
+/* Chat Window */
+.chat-window {
+  position: fixed;
+  bottom: 80px;
+  right: 20px;
+  width: var(--chat-width);
+  height: var(--chat-height);
+  background: white;
+  border-radius: 12px;
+  box-shadow: 0 12px 28px 0 rgba(0, 0, 0, 0.2);
+  display: flex;
+  flex-direction: column;
+  opacity: 0;
+  transform: translateY(100px) scale(0.9);
+  pointer-events: none;
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  z-index: 1000;
+}
+
+:host([open]) .chat-window {
+  opacity: 1;
+  transform: translateY(0) scale(1);
+  pointer-events: all;
+}
+
+/* Header */
+.header {
+  background: var(--fb-blue);
+  color: white;
+  padding: 16px;
+  border-radius: 12px 12px 0 0;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  font-size: 16px;
+  font-weight: 600;
+}
+
+.close-button {
+  background: none;
+  border: none;
+  color: white;
+  font-size: 20px;
+  cursor: pointer;
+  padding: 4px 8px;
+  border-radius: 50%;
+  transition: background-color 0.2s;
+}
+
+.close-button:hover {
+  background-color: rgba(255, 255, 255, 0.1);
+}
+
+/* Messages Area */
+.messages {
+  flex: 1;
+  overflow-y: auto;
+  padding: 16px;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  background: var(--fb-grey);
+}
+
+.message {
+  max-width: 80%;
+  padding: 8px 12px;
+  border-radius: 18px;
+  font-size: 14px;
+  line-height: 1.4;
+}
+
+.message.user {
+  background: var(--fb-blue);
+  color: white;
+  align-self: flex-end;
+  border-bottom-right-radius: 4px;
+}
+
+.message.bot {
+  background: white;
+  color: var(--fb-text);
+  align-self: flex-start;
+  border-bottom-left-radius: 4px;
+  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.1);
+}
+
+/* Input Area */
+.input-area {
+  padding: 16px;
+  background: white;
+  border-top: 1px solid var(--fb-grey);
+  border-radius: 0 0 12px 12px;
+}
+
+input {
+  width: 100%;
+  padding: 12px;
+  border: 1px solid var(--fb-grey);
+  border-radius: 20px;
+  font-size: 14px;
+  outline: none;
+  transition: border-color 0.2s;
+}
+
+input:focus {
+  border-color: var(--fb-blue);
+}
+
+/* Floating Button */
+.floating-button {
+  position: fixed;
+  bottom: 20px;
+  right: 20px;
+  width: 50px;
+  height: 50px;
+  border-radius: 50%;
+  background: var(--fb-blue);
+  color: white;
+  border: none;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 24px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+  transition: transform 0.2s, background-color 0.2s;
+  z-index: 1000;
+}
+
+.floating-button:hover {
+  background: var(--fb-blue-hover);
+  transform: scale(1.05);
+}
+
+.unread-badge {
+  position: absolute;
+  top: -5px;
+  right: -5px;
+  background: #ff3b30;
+  color: white;
+  border-radius: 50%;
+  width: 20px;
+  height: 20px;
+  font-size: 12px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: bold;
+}
+
+/* Mobile Responsive */
+@media (max-width: 480px) {
+  .chat-window {
+    bottom: 0;
+    right: 0;
+    width: 100%;
+    height: 100vh;
+    border-radius: 0;
+  }
+
+  .header {
+    border-radius: 0;
+  }
+
+  .floating-button {
+    bottom: 20px;
+    right: 20px;
+  }
+}
+
+/* Animations */
+@keyframes bounce {
+  0%,
+  100% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(-5px);
+  }
+}
+
+.floating-button:not(:hover) {
+  animation: bounce 2s infinite;
+}
+
+/* Input Area */
+.input-area {
+  padding: 16px;
+  background: white;
+  border-top: 1px solid var(--fb-grey);
+  border-radius: 0 0 12px 12px;
+  display: flex;
+  gap: 8px;
+  align-items: center;
+}
+
+.input-wrapper {
+  position: relative;
+  flex: 1;
+  display: flex;
+  align-items: center;
+}
+
+input {
+  width: 100%;
+  padding: 12px;
+  padding-right: 45px;
+  border: 1px solid var(--fb-grey);
+  border-radius: 20px;
+  font-size: 14px;
+  outline: none;
+  transition: border-color 0.2s;
+}
+
+input:focus {
+  border-color: var(--fb-blue);
+}
+
+.send-button {
+  width: 35px;
+  height: 35px;
+  position: absolute;
+  right: 5px;
+  background: var(--fb-blue);
+  color: white;
+  border: none;
+  border-radius: 50%;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: background-color 0.2s, transform 0.2s;
+}
+
+.send-button:hover {
+  background: var(--fb-blue-hover);
+  transform: scale(1.05);
+}
+
+.send-button:active {
+  transform: scale(0.95);
+}
+
+.send-button svg {
+  width: 20px;
+  height: 20px;
+  fill: currentColor;
+  transform: translateX(1px);
+}
+
+/* Update Mobile Responsive section */
+@media (max-width: 480px) {
+  .chat-window {
+    bottom: 0;
+    right: 0;
+    width: 100%;
+    height: 100vh;
+    border-radius: 0;
+  }
+
+  .header {
+    border-radius: 0;
+    padding: 12px 16px;
+  }
+
+  .input-area {
+    padding: 12px;
+  }
+
+  input {
+    font-size: 16px; /* Better for mobile typing */
+    padding: 10px 45px 10px 12px;
+  }
+
+  .send-button {
+    width: 32px;
+    height: 32px;
+  }
+
+  .floating-button {
+    bottom: 20px;
+    right: 20px;
+  }
+}
