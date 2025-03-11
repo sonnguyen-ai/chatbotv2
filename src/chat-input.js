@@ -2,16 +2,6 @@ import { LitElement, html, css } from "lit";
 
 export class ChatInput extends LitElement {
   static styles = css`
-    @media (max-width: 480px) {
-      input {
-        font-size: 16px;
-        padding: 10px 45px 10px 12px;
-      }
-      .send-button {
-        width: 32px;
-        height: 32px;
-      }
-    }
     .input-area {
       padding: 16px;
       background: white;
@@ -35,7 +25,7 @@ export class ChatInput extends LitElement {
       padding-right: 45px;
       border: 1px solid var(--fb-grey);
       border-radius: 20px;
-      font-size: 1rem;
+      font-size: 0.85rem;
       outline: none;
       transition: border-color 0.2s;
     }
@@ -74,6 +64,17 @@ export class ChatInput extends LitElement {
       height: 20px;
       fill: currentColor;
       transform: translateX(1px);
+    }
+
+    @media (max-width: 520px) {
+      input {
+        font-size: 16px;
+        padding: 10px 45px 10px 12px;
+      }
+      .send-button {
+        width: 32px;
+        height: 32px;
+      }
     }
   `;
 

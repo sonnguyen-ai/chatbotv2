@@ -7,6 +7,7 @@ export class ChatWindow extends LitElement {
   static properties = {
     open: { type: Boolean, reflect: true },
     messages: { type: Array },
+    loading: { type: Boolean },
   };
 
   static styles = css`
@@ -19,7 +20,7 @@ export class ChatWindow extends LitElement {
       --chat-height: min(600px, 80vh);
       font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto,
         Helvetica, Arial, sans-serif;
-      font-size: 16px
+      font-size: 16px;
     }
 
     .chat-window {
@@ -73,7 +74,7 @@ export class ChatWindow extends LitElement {
         width: 100%;
         height: 85vh;
         border-radius: 0;
-        font-size: 16px
+        font-size: 16px;
       }
     }
   `;
@@ -82,7 +83,7 @@ export class ChatWindow extends LitElement {
     return html`
       <div class="chat-window">
         <chat-header></chat-header>
-        <message-list .messages=${this.messages}></message-list>
+        <message-list .messages=${this.messages} ?loading=${this.loading}></message-list>
         <chat-input></chat-input>
       </div>
     `;
