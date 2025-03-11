@@ -1,38 +1,40 @@
-/**
- * @jest-environment jsdom
- */
+import { fixture, html, expect } from "@open-wc/testing";
+import "../chat-header.js";
 
-import '../chat-header.js';
-
-describe('ChatHeader', () => {
+describe("ChatHeader", () => {
   let element;
 
-  beforeEach(() => {
-    element = document.createElement('chat-header');
-    document.body.appendChild(element);
+  beforeEach(async () => {
+    element = await fixture(html`<chat-header></chat-header>`);
   });
 
-  afterEach(() => {
-    document.body.removeChild(element);
+  it("renders with the correct structure", () => {
+    const header = element.shadowRoot.querySelector(".header");
+    const span = element.shadowRoot.querySelector("span");
+    const button = element.shadowRoot.querySelector("button");
+
+    expect(header).to.exist;
+    expect(span).to.exist;
+    expect(span.textContent).to.equal("Chat Support");
+    expect(button).to.exist;
+    expect(button.textContent).to.equal("✕");
+    // console.error(element.shadowRoot.innerHTML);
   });
 
-  it('should be defined as a custom element', () => {
-    expect(customElements.get('chat-header')).toBeDefined();
+  it("dispatches toggle-chat event when close button is clicked", async () => {
+    const button = element.shadowRoot.querySelector(".close-button");
+    let eventFired = false;
+
+    element.addEventListener("toggle-chat", () => {
+      eventFired = true;
+    });
+
+    button.click();
+
+    expect(eventFired).to.be.true;
   });
 
-  it('should create with shadow DOM', () => {
-    expect(element.shadowRoot).toBeTruthy();
-  });
-
-  it('should render in the document', () => {
-    expect(document.body.contains(element)).toBeTruthy();
-  });
-
-  // Add more specific tests based on your chat-header implementation
-  // For example, testing specific slots, attributes, or methods:
-  
-  it('should reflect attribute changes', () => {
-    element.setAttribute('title', 'Test Chat');
-    expect(element.getAttribute('title')).toBe('Test Chat');
+  it("is accessible", async () => {
+    await expect(element).to.be.accessible();
   });
 });
