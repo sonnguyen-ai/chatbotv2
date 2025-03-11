@@ -2,7 +2,8 @@ const mockSetting = {
   baseUrl: "https://chatbotcooapi.azurewebsites.net",
   tenantId: "seysolutions",
   configuration: {
-    title: "Sey Bot",
+    defaultMessage: "Hello!",
+    title: "Chat with Sey",
     max_token: "300",
     instruction: `language: Vietnamese, english
 role: customer service assistant for Sey solutions, should be friendly, suporty
