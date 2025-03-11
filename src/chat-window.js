@@ -8,7 +8,16 @@ export class ChatWindow extends LitElement {
     open: { type: Boolean, reflect: true },
     messages: { type: Array },
     loading: { type: Boolean },
+    settings: { type: Object },
   };
+
+  /**
+   *
+   */
+  constructor() {
+    super();
+    
+  }
 
   static styles = css`
     :host {
