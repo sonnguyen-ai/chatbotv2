@@ -24,7 +24,7 @@ export class ChatBot extends LitElement {
     this.loading = false;
     this.initialized = false;
     this.settings = {};
-    this.chatService = new ChatService("https://localhost:7015");
+    this.chatService = new ChatService();
   }
 
   async connectedCallback() {
