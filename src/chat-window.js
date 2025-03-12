@@ -9,6 +9,7 @@ export class ChatWindow extends LitElement {
     messages: { type: Array },
     loading: { type: Boolean },
     settings: { type: Object },
+    defaultColor: {state: true}
   };
 
   /**
@@ -16,13 +17,34 @@ export class ChatWindow extends LitElement {
    */
   constructor() {
     super();
-    
+    this.defaultColor = {
+      mainColor: "#0a284e",
+      secondColor: "#1464d1",
+    };
+  }
+
+  // Update colors when settings change
+  updated(changedProperties) {
+    if (changedProperties.has('settings') && this.settings?.configuration?.colors) {
+      this.defaultColor = this.settings.configuration.colors;
+      this.updateColors();
+    }
+  }
+
+  // Update CSS custom properties
+  updateColors() {
+    this.style.setProperty('--fb-blue', this.defaultColor.mainColor);
+    this.style.setProperty('--fb-blue-hover', this.defaultColor.secondColor);
+  }
+
+  firstUpdated() {
+    // Set initial colors
+    this.updateColors();
   }
 
   static styles = css`
     :host {
-      --fb-blue: #1877f2;
-      --fb-blue-hover: #1464d1;
+      
       --fb-grey: #f0f2f5;
       --fb-text: #050505;
       --chat-width: min(400px, 95vw);
@@ -92,7 +114,10 @@ export class ChatWindow extends LitElement {
     return html`
       <div class="chat-window">
         <chat-header></chat-header>
-        <message-list .messages=${this.messages} ?loading=${this.loading}></message-list>
+        <message-list
+          .messages=${this.messages}
+          ?loading=${this.loading}
+        ></message-list>
         <chat-input></chat-input>
       </div>
     `;
