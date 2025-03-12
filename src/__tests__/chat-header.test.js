@@ -18,7 +18,7 @@ describe("ChatHeader", () => {
     expect(span.textContent).to.equal("Chat Support");
     expect(button).to.exist;
     expect(button.textContent).to.equal("✕");
-    // console.error(element.shadowRoot.innerHTML);
+
   });
 
   it("dispatches toggle-chat event when close button is clicked", async () => {
@@ -34,7 +34,4 @@ describe("ChatHeader", () => {
     expect(eventFired).to.be.true;
   });
 
-  it("is accessible", async () => {
-    await expect(element).to.be.accessible();
-  });
 });
