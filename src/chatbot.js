@@ -2,7 +2,6 @@ import { LitElement, html } from "lit";
 import "./chat-window.js";
 import "./floating-button.js";
 import ChatService from "./services/chat-service.js";
-import mockSetting from "./mockdata.js";
 import { checkParameterType } from "./utilities.js";
 
 export class ChatBot extends LitElement {
