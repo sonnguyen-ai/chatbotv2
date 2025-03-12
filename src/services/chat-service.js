@@ -77,6 +77,13 @@ class ChatService extends BaseApiService {
       );
     }
   }
+
+  async getSettings(tenantId) {
+    const response = await this.get(`/settings/${tenantId}`, {
+      headers: { "cache-control": "no-cache" },
+    });
+    return response;
+  }
 }
 
 export default ChatService;

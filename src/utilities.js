@@ -28,3 +28,23 @@ export function formatLLMResponse(text) {
       .join("\n")
   );
 }
+
+export function checkParameterType(param) {
+  // Handle null case (since typeof null returns 'object')
+  if (param === null) {
+    return 'null';
+  }
+
+  // Check if it's an object but not an array
+  if (typeof param === 'object' && !Array.isArray(param)) {
+    return 'object';
+  }
+
+  // Check if it's a string
+  if (typeof param === 'string') {
+    return 'string';
+  }
+
+  // Return the actual type for any other case
+  return typeof param;
+}

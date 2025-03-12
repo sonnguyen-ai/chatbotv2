@@ -3,6 +3,7 @@ import "./chat-window.js";
 import "./floating-button.js";
 import ChatService from "./services/chat-service.js";
 import mockSetting from "./mockdata.js";
+import { checkParameterType } from "./utilities.js";
 
 export class ChatBot extends LitElement {
   static properties = {
@@ -11,6 +12,7 @@ export class ChatBot extends LitElement {
     unreadCount: { type: Number },
     loading: { type: Boolean },
     initialized: { type: Boolean, state: true },
+    tenantId: { type: String, reflect: true },
     settings: { type: Object, state: true },
   };
 
@@ -22,17 +24,18 @@ export class ChatBot extends LitElement {
     this.loading = false;
     this.initialized = false;
     this.settings = {};
-    this.chatService = new ChatService();
+    this.chatService = new ChatService("https://localhost:7015");
   }
 
-  connectedCallback() {
+  async connectedCallback() {
     super.connectedCallback();
     this.addEventListener("toggle-chat", this._handleToggleChat);
     this.addEventListener("send-message", this._handleSendMessage);
-    this.settings = mockSetting;
+    this.settings = await this.chatService.getSettings(this.tenantId);
+
     this.initialized = true;
     this.messages = [
-      { text: this.settings.configuration.defaultMessage, sender: "model" },
+      { text: this.settings.configuration.welcomeMessage, sender: "model" },
     ];
   }
 
@@ -55,6 +58,11 @@ export class ChatBot extends LitElement {
     // Set loading state
     this.loading = true;
 
+    const prompts =
+      checkParameterType(this.settings.configuration.prompt) === "string"
+        ? this.settings.configuration.prompt
+        : JSON.stringify(this.settings.configuration.prompt);
+
     const previousMessages = [
       {
         parts: [{ text: this.settings.configuration.instruction }],
@@ -62,7 +70,7 @@ export class ChatBot extends LitElement {
       },
       ,
       {
-        parts: [{ text: JSON.stringify(this.settings.configuration.prompt) }],
+        parts: [{ text: prompts }],
         role: "model",
       },
       this.messages.map((msg) => ({
