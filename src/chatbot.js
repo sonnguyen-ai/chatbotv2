@@ -23,7 +23,7 @@ export class ChatBot extends LitElement {
     this.loading = false;
     this.initialized = false;
     this.settings = {};
-    this.chatService = new ChatService();
+    this.chatService = new ChatService("http://localhost:5194");
   }
 
   async connectedCallback() {
@@ -94,7 +94,7 @@ export class ChatBot extends LitElement {
           maxOutputTokens: 300,
           temperature: 0.7,
         },
-        tenantId: "seysolutions",
+        tenantId: this.tenantId,
       });
 
       if (response && response.candidates && response.candidates[0]) {
