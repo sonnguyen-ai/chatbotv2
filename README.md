@@ -1,6 +1,8 @@
 **How to run on local**
 
-1- Run api project (check at : http://localhost:5194/swagger/index.html)
+1- Run api project (check at : http://localhost:5194/swagger/index.html) or using azure api src/chatbot.js - modify this.chatService = new ChatService("http://localhost:5194") -> this.chatService = new ChatService();
+
+`https://chatbotcooapi.azurewebsites.net/swagger/index.html`
 
 2- cd chatbot-lite
 
